@@ -5,7 +5,7 @@ fn main() raises:
   left = List[Int]()
   right = List[Int]()
   for line in data.splitlines():
-    numbers = line[].split("   ")
+    numbers = line.split("   ")
     left.append(Int(numbers[0]))
     right.append(Int(numbers[1]))
 

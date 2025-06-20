@@ -4,7 +4,7 @@ fn main() raises:
   data = Path("problems/02/data.txt").read_text()
   total_safe = 0
   for line in data.splitlines():
-    numbers_str = line[].split(" ")
+    numbers_str = line.split(" ")
     numbers = List[Int]()
     for i in range(len(numbers_str)):
       numbers.append(Int(numbers_str[i]))
