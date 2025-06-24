@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 fn is_xmas(
-    read lines: List[String], mut i: Int, mut j: Int, di: Int, dj: Int
+    read lines: List[String], owned i: Int, owned j: Int, di: Int, dj: Int
 ) -> Bool:
     if not (0 <= i + 3 * di < len(lines) and 0 <= j + 3 * dj < len(lines[0])):
         return False
@@ -15,31 +15,35 @@ fn is_xmas(
             or (n == 2 and char == "A")
             or (n == 3 and char == "S")
         ):
-            print(n, char)
             n += 1
         else:
-            print(n, char, "not match\n")
             return False
         i += di
         j += dj
-    print("\n")
     return True
 
 
 fn main() raises:
-    lines = Path("problems/04/test.txt").read_text().splitlines()
+    lines = Path("problems/04/data.txt").read_text().splitlines()
     total = 0
+    directions: Dict[String, Tuple[Int, Int]] = {
+        "down": (1, 0),
+        "down-right": (1, 1),
+        "right": (0, 1),
+        "up-right": (-1, 1),
+        "up": (-1, 0),
+        "up-left": (-1, -1),
+        "left": (0, -1),
+        "down-left": (1, -1)
+    }
     for i in range(len(lines)):
         for j in range(len(lines[i])):
-            print(i, j)
-            if is_xmas(lines, i, j, 1, 0):  # down
-                total += 1
-            if is_xmas(lines, i, j, 0, 1):  # right
-                total += 1
-            if is_xmas(lines, i, j, -1, 0):  # up
-                total += 1
-            if is_xmas(lines, i, j, 0, -1):  # left
-                total += 1
-            print(i, j, "total:", total)
+            if lines[i][j] != "X":
+                continue
+            
+            for entry in directions.items():
+                di, dj = entry.value
+                if is_xmas(lines, i, j, di, dj):
+                    total += 1
 
     print("Total:", total)
